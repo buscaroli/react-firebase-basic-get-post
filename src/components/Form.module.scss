@@ -25,11 +25,19 @@
 
 .formInput {
   grid-column: 3/9;
+
+  &:focus {
+    outline: none;
+  }
   
 }
 
 .formTextarea {
   grid-column: 3/9;
+
+  &:focus {
+    outline: none;
+  }
 
 }
 
@@ -48,3 +56,9 @@
     
   }
 }
+
+.invalid {
+  
+  border: 2px solid orange;
+}
+

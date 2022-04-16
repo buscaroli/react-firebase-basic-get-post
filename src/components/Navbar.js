@@ -8,11 +8,11 @@ import styles from './Navbar.module.scss'
 function Navbar() {
   return (
     <BrowserRouter>
-      <navbar className={styles.navbar}>
+      <nav className={styles.navbar}>
         <Logo />
         <Links />
         <HamburgerMenu />
-      </navbar>
+      </nav>
     </BrowserRouter>
   )
 }
