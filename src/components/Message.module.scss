@@ -1,0 +1,19 @@
+.msg {
+  color: var(--color-dark);
+  padding: .5rem;
+  margin: 1rem;
+  background-color: white;
+  box-shadow: 0 0 6px gray;
+}
+
+.msgName {
+  text-align: start;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.msgText {
+  letter-spacing: 1.5px;
+  font-size: 1.2rem;
+  padding: .5rem 0;
+}

@@ -1,0 +1,12 @@
+.headerLinks {
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  
+  color: var(--color-light);
+
+  @media screen and (max-width: 640px) {
+    display: none;
+  }
+}

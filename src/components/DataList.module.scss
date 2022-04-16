@@ -1,0 +1,13 @@
+.list {
+  text-align: center;;
+  background-color: var(--color-light);
+  
+  width: 400px;
+  min-height: 70vh;
+  padding: 1rem;
+  box-shadow: 0 0 8px gray;
+
+  @media screen and (max-width: 640px){
+    width: 300px;
+  }
+}

@@ -1,0 +1,9 @@
+.hamMenu {
+  display: none;
+  font-size: 2rem;
+  color: var(--color-light);
+
+  @media screen and (max-width: 640px) {
+    display: block
+  }
+}
