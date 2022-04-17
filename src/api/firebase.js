@@ -9,14 +9,11 @@ import {
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain: 'react-firebase-basic-post-get.firebaseapp.com',
-  databaseURL:
-    'https://react-firebase-basic-post-get-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'react-firebase-basic-post-get',
-  storageBucket: 'react-firebase-basic-post-get.appspot.com',
-  messagingSenderId: '639861888346',
-  appId: '1:639861888346:web:5c946bcf81aec49ce7cf63',
-  measurementId: 'G-3PPJ8XSRCM',
+  authDomain: 'react-firebase-basic-app-a06ad.firebaseapp.com',
+  projectId: 'react-firebase-basic-app-a06ad',
+  storageBucket: 'react-firebase-basic-app-a06ad.appspot.com',
+  messagingSenderId: '75746738576',
+  appId: '1:75746738576:web:d398d9164f81b0328ef315',
 }
 
 const app = initializeApp(firebaseConfig)

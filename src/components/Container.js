@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Container.module.scss'
 import Form from './Form'
 import DataList from './DataList'
 import { db } from '../api/firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 function Container() {
   const [messages, setMessages] = useState([
@@ -13,6 +14,21 @@ function Container() {
       text: 'Add your First Message!',
     },
   ])
+
+  useEffect(() => {
+    const getData = async () => {
+      const querySnapshot = await getDocs(collection(db, 'messages'))
+      let retrievedMsgs = []
+      querySnapshot.forEach((doc) => {
+        let newMsg = { ...doc.data() }
+        retrievedMsgs.push(newMsg)
+        console.log('Container - newMsg ->', newMsg)
+      })
+      console.log('Container - retievedMessages ->', retrievedMsgs)
+      setMessages(retrievedMsgs)
+    }
+    getData()
+  }, [])
 
   const sendData = (data) => {
     console.log(data)
