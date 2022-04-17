@@ -15,6 +15,7 @@ function Container() {
     },
   ])
 
+  // retrieve messages on first render and everytime there is a change in messages
   useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db, 'messages'))
@@ -22,14 +23,14 @@ function Container() {
       querySnapshot.forEach((doc) => {
         let newMsg = { ...doc.data() }
         retrievedMsgs.push(newMsg)
-        // console.log('Container - newMsg ->', newMsg)
       })
-      // console.log('Container - retievedMessages ->', retrievedMsgs)
+
       setMessages(retrievedMsgs)
     }
     getData()
   }, [messages])
 
+  // send data to the server
   const sendData = async (data) => {
     try {
       await addDoc(collection(db, 'messages'), data)
