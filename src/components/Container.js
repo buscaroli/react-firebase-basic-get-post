@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import styles from './Container.module.scss'
 import Form from './Form'
 import DataList from './DataList'
+import { db } from '../api/firebase'
 
 function Container() {
   const [messages, setMessages] = useState([
-    { name: 'Your App', text: 'Enter your first text!' },
+    {
+      name: 'Your App',
+      email: 'app@email.com',
+      id: '12345',
+      text: 'Add your First Message!',
+    },
   ])
 
   const sendData = (data) => {
