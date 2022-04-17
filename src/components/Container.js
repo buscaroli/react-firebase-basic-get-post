@@ -3,7 +3,7 @@ import styles from './Container.module.scss'
 import Form from './Form'
 import DataList from './DataList'
 import { db } from '../api/firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, addDoc } from 'firebase/firestore'
 
 function Container() {
   const [messages, setMessages] = useState([
@@ -22,17 +22,20 @@ function Container() {
       querySnapshot.forEach((doc) => {
         let newMsg = { ...doc.data() }
         retrievedMsgs.push(newMsg)
-        console.log('Container - newMsg ->', newMsg)
+        // console.log('Container - newMsg ->', newMsg)
       })
-      console.log('Container - retievedMessages ->', retrievedMsgs)
+      // console.log('Container - retievedMessages ->', retrievedMsgs)
       setMessages(retrievedMsgs)
     }
     getData()
-  }, [])
+  }, [messages])
 
-  const sendData = (data) => {
-    console.log(data)
-    setMessages([...messages, data])
+  const sendData = async (data) => {
+    try {
+      await addDoc(collection(db, 'messages'), data)
+    } catch (error) {
+      console.error({ error })
+    }
   }
 
   return (

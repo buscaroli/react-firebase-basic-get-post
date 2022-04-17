@@ -3,7 +3,6 @@ import styles from './DataList.module.scss'
 import Message from './Message'
 
 function DataList({ messages }) {
-  console.log('DataList, messages: ', messages)
   return (
     <div className={styles.list}>
       <h3>Data</h3>
