@@ -6,6 +6,30 @@
   box-shadow: 0 0 6px gray;
 }
 
+.msgTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.msgUpdate {
+  padding-right: .5rem;
+  color: var(--color-medium);
+  
+  &:hover {
+    cursor: context-menu;
+    opacity: 0.8;
+  }
+}
+
+.msgDelete {
+  color: var(--color-accent);
+  
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
 .msgName {
   text-align: start;
   font-weight: 600;

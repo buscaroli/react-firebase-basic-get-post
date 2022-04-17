@@ -15,7 +15,13 @@ function Container() {
     },
   ])
 
-  // retrieve messages on first render and everytime there is a change in messages
+  // retrieve messages on first render and everytime there is a change
+  //in messages
+  // NB I am passing the db instead of the messages as
+  // collection(db, 'messages') returns a new collection reference
+  // everytime the component renders: tracking messages to useEffects
+  // was leading to an infinite loop (and at me using 50K/day calls limit
+  // with the free version of firebase within a few minutes 😭 )
   useEffect(() => {
     const getData = async () => {
       const querySnapshot = await getDocs(collection(db, 'messages'))
@@ -24,11 +30,11 @@ function Container() {
         let newMsg = { ...doc.data() }
         retrievedMsgs.push(newMsg)
       })
-
+      console.log(messages)
       setMessages(retrievedMsgs)
     }
     getData()
-  }, [messages])
+  }, [db])
 
   // send data to the server
   const sendData = async (data) => {
