@@ -1,10 +1,11 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import { db, auth } from '../api/firebase'
 import { collection, addDoc, getDocs, orderBy } from 'firebase/firestore'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth'
 
 const DatabaseContext = createContext()
@@ -12,6 +13,7 @@ const DatabaseContext = createContext()
 export function DatabaseProvider({ children }) {
   const [isLogged, setIsLogged] = useState(false)
   const [messages, setMessages] = useState([])
+  const [user, setUser] = useState()
 
   const signup = (userData) => {
     // console.log('DatabaseContext - signup - userData -> ', userData)
@@ -54,6 +56,21 @@ export function DatabaseProvider({ children }) {
         console.log('Error: ', { code: error.code, message: error.message })
       })
   }
+
+  useEffect(() => {
+    const authState = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      console.log('DatabaseContext.js - useEffect - user -> ', currentUser)
+
+      if (!currentUser) {
+        setIsLogged(false)
+      } else {
+        setIsLogged(true)
+        setUser(currentUser)
+      }
+    })
+    return authState
+  }, [])
 
   // get all messages
   const getMessages = async () => {
