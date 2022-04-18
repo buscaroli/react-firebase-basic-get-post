@@ -3,7 +3,7 @@ import styles from './Container.module.scss'
 import Form from './Form'
 import DataList from './DataList'
 import DatabaseContext from '../contexts/DatabaseContext'
-import Signin from './Signin'
+import Signup from './Signup'
 import Login from './Login'
 import { auth } from '../api/firebase'
 
@@ -20,7 +20,7 @@ function Container() {
       <Form />
       <div>
         <DataList messages={messages} />
-        <Signin />
+        <Signup />
         <Login />
       </div>
     </main>

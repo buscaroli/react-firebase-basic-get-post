@@ -1,26 +1,34 @@
 import { createContext, useState } from 'react'
-import { db } from '../api/firebase'
+import { db, auth } from '../api/firebase'
 import { collection, addDoc, getDocs, orderBy } from 'firebase/firestore'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from 'firebase/auth'
 
 const DatabaseContext = createContext()
 
 export function DatabaseProvider({ children }) {
-  const auth = getAuth()
+  const [user, setUser] = useState({})
   const [isLogged, setIsLogged] = useState(false)
   const [messages, setMessages] = useState([])
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  })
+  const signup = async (userData) => {
+    console.log('DatabaseContext - signup - userData -> ', userData)
+    console.log('DatabaseContext.js - signup - auth -> ', auth)
+    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredentials) => {
+        const newUser = userCredentials.user
+        setUser(newUser)
+        console.log('DatabaseContext.js - signup - newUser => ', newUser)
+        setIsLogged(true)
+      })
+      .catch((error) => {
+        setIsLogged(false)
+        console.error('Error: ', { code: error.code, message: error.message })
+      })
+  }
 
   // get all messages
   const getMessages = async () => {
@@ -61,20 +69,10 @@ export function DatabaseProvider({ children }) {
     }
   }
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  })
-
   return (
-    <DatabaseContext.Provider value={{ messages, getMessages, sendMessage }}>
+    <DatabaseContext.Provider
+      value={{ messages, getMessages, sendMessage, signup, user }}
+    >
       {children}
     </DatabaseContext.Provider>
   )

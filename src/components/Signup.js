@@ -1,8 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
-import styles from './Signin.module.scss'
+import { useState, useContext } from 'react'
+import styles from './Signup.module.scss'
+import DatabaseContext from '../contexts/DatabaseContext'
 
-function Signin() {
+function Signup() {
+  const { signup } = useContext(DatabaseContext)
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,8 +25,13 @@ function Signin() {
   const formSubmissionHandler = (e) => {
     e.preventDefault()
 
-    const date = new Date()
-    const time = date.getTime()
+    const user = {
+      name,
+      email,
+      password,
+    }
+
+    signup(user)
 
     setName('')
     setEmail('')
@@ -31,8 +39,8 @@ function Signin() {
   }
 
   return (
-    <div className={styles.signin}>
-      <form className={styles.signinForm}>
+    <div className={styles.signup}>
+      <form className={styles.signupForm}>
         <label className={styles.formLabel} htmlFor="name">
           Name
         </label>
@@ -77,4 +85,4 @@ function Signin() {
   )
 }
 
-export default Signin
+export default Signup
