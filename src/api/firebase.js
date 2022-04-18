@@ -1,14 +1,20 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain: 'react-firebase-basic-app-a06ad.firebaseapp.com',
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: 'react-firebase-basic-app-a06ad',
   storageBucket: 'react-firebase-basic-app-a06ad.appspot.com',
   messagingSenderId: '75746738576',
   appId: '1:75746738576:web:d398d9164f81b0328ef315',
 }
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig)
+
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(app)
+
 export const db = getFirestore(app)

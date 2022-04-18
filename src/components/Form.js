@@ -7,11 +7,8 @@ function Form() {
   const { sendMessage } = useContext(DatabaseContext)
 
   const [name, setName] = useState('')
-  const [validName, setValidName] = useState(true)
   const [email, setEmail] = useState('')
-  const [validEmail, setValidEmail] = useState(true)
   const [text, setText] = useState('')
-  const [validText, setValidText] = useState(true)
 
   const formSubmissionHandler = (e) => {
     e.preventDefault()
@@ -24,28 +21,18 @@ function Form() {
     setName('')
     setEmail('')
     setText('')
-    setValidName(true)
-    setValidEmail(true)
-    setValidText(true)
   }
 
   const nameHandler = (e) => {
     setName(e.target.value)
-
-    name.length > 0 ? setValidName(true) : setValidName(false)
   }
 
   const emailHandler = (e) => {
     setEmail(e.target.value)
-    email.includes('@') && email.includes('.')
-      ? setValidEmail(true)
-      : setValidEmail(false)
   }
 
   const textHandler = (e) => {
     setText(e.target.value)
-
-    text.length > 0 ? setValidText(true) : setValidText(false)
   }
 
   return (
@@ -55,9 +42,7 @@ function Form() {
       </label>
       <input
         onChange={nameHandler}
-        className={`${styles.formInput} ${
-          validName === true ? '' : styles.invalid
-        }`}
+        className={styles.formInput}
         value={name}
         type="text"
         id="name"
@@ -68,7 +53,7 @@ function Form() {
       </label>
       <input
         onChange={emailHandler}
-        className={`${styles.formInput} ${validEmail ? '' : styles.invalid}`}
+        className={styles.formInput}
         value={email}
         type="text"
         id="email"
@@ -79,7 +64,7 @@ function Form() {
       </label>
       <textarea
         onChange={textHandler}
-        className={`${styles.formTextarea} ${validText ? '' : styles.invalid}`}
+        className={styles.formTextarea}
         value={text}
         type="text"
         id="text"

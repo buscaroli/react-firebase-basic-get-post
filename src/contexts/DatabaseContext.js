@@ -1,11 +1,26 @@
 import { createContext, useState } from 'react'
 import { db } from '../api/firebase'
 import { collection, addDoc, getDocs, orderBy } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const DatabaseContext = createContext()
 
 export function DatabaseProvider({ children }) {
+  const auth = getAuth()
+  const [isLogged, setIsLogged] = useState(false)
   const [messages, setMessages] = useState([])
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  })
 
   // get all messages
   const getMessages = async () => {
@@ -31,7 +46,7 @@ export function DatabaseProvider({ children }) {
     } else {
       console.log(messages)
       retrievedMsgs.sort((a, b) => b.time - a.time)
-      console.log('sorted: ', retrievedMsgs)
+      // console.log('sorted: ', retrievedMsgs)
       setMessages(retrievedMsgs)
     }
   }
@@ -45,6 +60,18 @@ export function DatabaseProvider({ children }) {
       console.error({ error })
     }
   }
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  })
 
   return (
     <DatabaseContext.Provider value={{ messages, getMessages, sendMessage }}>

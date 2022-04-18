@@ -4,9 +4,8 @@ import style from './Links.module.scss'
 
 const linkArray = [
   { text: 'Home', path: '/home' },
-  { text: 'Where', path: '/where' },
-  { text: 'Why', path: '/why' },
-  { text: 'Who', path: '/who' },
+  { text: 'About', path: '/about' },
+  { text: 'Contacts', path: '/contacts' },
 ]
 
 function Links() {
@@ -19,6 +18,15 @@ function Links() {
           </Link>
         )
       })}
+      <Link className={style.headerLinks} to={'/login'}>
+        Login
+      </Link>
+      <Link className={style.headerLinks} to={'/logout'}>
+        Logout
+      </Link>
+      <Link className={style.headerLinks} to={'/signup'}>
+        Signup
+      </Link>
     </div>
   )
 }
