@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import style from './Links.module.scss'
+import { useContext } from 'react'
+import DatabaseContext from '../contexts/DatabaseContext'
+import { auth } from '../api/firebase'
 
 const linkArray = [
   { text: 'Home', path: '/home' },
@@ -9,6 +12,23 @@ const linkArray = [
 ]
 
 function Links() {
+  const { login, logout, signup, isLogged } = useContext(DatabaseContext)
+
+  const loginHandler = (e) => {
+    e.preventDefault()
+  }
+
+  const signupHandler = (e) => {
+    e.preventDefault()
+  }
+
+  const logoutHandler = (e) => {
+    e.preventDefault()
+
+    logout()
+    console.log(auth)
+  }
+
   return (
     <div>
       {linkArray.map((link, index) => {
@@ -18,15 +38,23 @@ function Links() {
           </Link>
         )
       })}
-      <Link className={style.headerLinks} to={'/login'}>
-        Login
-      </Link>
-      <Link className={style.headerLinks} to={'/logout'}>
-        Logout
-      </Link>
-      <Link className={style.headerLinks} to={'/signup'}>
-        Signup
-      </Link>
+      {!isLogged && (
+        <button onClick={loginHandler} className={style.btn}>
+          Login
+        </button>
+      )}
+
+      {!isLogged && (
+        <button onClick={signupHandler} className={style.btn}>
+          SignUp
+        </button>
+      )}
+
+      {isLogged && (
+        <button onClick={logoutHandler} className={style.btn}>
+          Logout
+        </button>
+      )}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import styles from './Signup.module.scss'
 import DatabaseContext from '../contexts/DatabaseContext'
 
 function Signup() {
-  const { signup } = useContext(DatabaseContext)
+  const { signup, login, logout } = useContext(DatabaseContext)
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,8 +31,9 @@ function Signup() {
       password,
     }
 
+    console.log('Signup.js - formSubmissionHandler -> ', user)
     signup(user)
-
+    console.log('Signup.js - formSubmissionHandler -> ', user)
     setName('')
     setEmail('')
     setPassword('')

@@ -1,8 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import styles from './Login.module.scss'
+import DatabaseContext from '../contexts/DatabaseContext'
 
 function Login() {
+  const { login } = useContext(DatabaseContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -17,8 +20,12 @@ function Login() {
   const formSubmissionHandler = (e) => {
     e.preventDefault()
 
-    const date = new Date()
-    const time = date.getTime()
+    const user = {
+      email,
+      password,
+    }
+
+    login(user)
 
     setEmail('')
     setPassword('')

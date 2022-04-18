@@ -2,31 +2,56 @@ import { createContext, useState } from 'react'
 import { db, auth } from '../api/firebase'
 import { collection, addDoc, getDocs, orderBy } from 'firebase/firestore'
 import {
-  getAuth,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth'
 
 const DatabaseContext = createContext()
 
 export function DatabaseProvider({ children }) {
-  const [user, setUser] = useState({})
   const [isLogged, setIsLogged] = useState(false)
   const [messages, setMessages] = useState([])
 
-  const signup = async (userData) => {
-    console.log('DatabaseContext - signup - userData -> ', userData)
+  const signup = (userData) => {
+    // console.log('DatabaseContext - signup - userData -> ', userData)
     console.log('DatabaseContext.js - signup - auth -> ', auth)
-    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+    return createUserWithEmailAndPassword(
+      auth,
+      userData.email,
+      userData.password
+    )
       .then((userCredentials) => {
-        const newUser = userCredentials.user
-        setUser(newUser)
-        console.log('DatabaseContext.js - signup - newUser => ', newUser)
         setIsLogged(true)
+        console.log('DatabaseContext.js - signup - auth -> ', auth)
       })
       .catch((error) => {
         setIsLogged(false)
         console.error('Error: ', { code: error.code, message: error.message })
+      })
+  }
+
+  const login = (userData) => {
+    return signInWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredential) => {
+        setIsLogged(true)
+        console.log('DatabaseContext.js - login - auth -> ', auth)
+      })
+      .catch((error) => {
+        setIsLogged(false)
+        console.error('Error: ', { code: error.code, message: error.message })
+      })
+  }
+
+  const logout = () => {
+    return signOut(auth)
+      .then(() => {
+        console.log('Signed out')
+        console.log(auth)
+        setIsLogged(false)
+      })
+      .catch((error) => {
+        console.log('Error: ', { code: error.code, message: error.message })
       })
   }
 
@@ -71,7 +96,15 @@ export function DatabaseProvider({ children }) {
 
   return (
     <DatabaseContext.Provider
-      value={{ messages, getMessages, sendMessage, signup, user }}
+      value={{
+        messages,
+        getMessages,
+        sendMessage,
+        signup,
+        login,
+        logout,
+        isLogged,
+      }}
     >
       {children}
     </DatabaseContext.Provider>
