@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { v4 } from 'uuid'
 import styles from './Form.module.scss'
+import DatabaseContext from '../contexts/DatabaseContext'
 
-function Form({ onSubmitForm }) {
+function Form() {
+  const { sendMessage } = useContext(DatabaseContext)
+
   const [name, setName] = useState('')
   const [validName, setValidName] = useState(true)
   const [email, setEmail] = useState('')
@@ -16,11 +19,14 @@ function Form({ onSubmitForm }) {
     const date = new Date()
     const time = date.getTime()
     const id = String(v4())
-    onSubmitForm({ name, email, text, time, id })
+    sendMessage({ name, email, text, time, id })
 
     setName('')
     setEmail('')
     setText('')
+    setValidName(true)
+    setValidEmail(true)
+    setValidText(true)
   }
 
   const nameHandler = (e) => {
@@ -49,7 +55,9 @@ function Form({ onSubmitForm }) {
       </label>
       <input
         onChange={nameHandler}
-        className={`${styles.formInput} ${validName ? '' : styles.invalid}`}
+        className={`${styles.formInput} ${
+          validName === true ? '' : styles.invalid
+        }`}
         value={name}
         type="text"
         id="name"
