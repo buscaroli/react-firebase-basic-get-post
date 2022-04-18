@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { v4 } from 'uuid'
 import styles from './Form.module.scss'
 
 function Form({ onSubmitForm }) {
@@ -12,7 +13,10 @@ function Form({ onSubmitForm }) {
   const formSubmissionHandler = (e) => {
     e.preventDefault()
 
-    onSubmitForm({ name, email, text })
+    const date = new Date()
+    const time = date.getTime()
+    const id = String(v4())
+    onSubmitForm({ name, email, text, time, id })
 
     setName('')
     setEmail('')
