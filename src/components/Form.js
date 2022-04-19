@@ -2,27 +2,19 @@ import React, { useState, useContext, useEffect } from 'react'
 import { v4 } from 'uuid'
 import styles from './Form.module.scss'
 import DatabaseContext from '../contexts/DatabaseContext'
-import { auth } from '../api/firebase'
 
 function Form() {
   const { sendMessage, user } = useContext(DatabaseContext)
 
   const [text, setText] = useState('')
-  const [email, setEmail] = useState('')
-  const [userId, setUserId] = useState('')
-
-  useEffect(() => {
-    setEmail(auth.email)
-    setUserId(String(auth.uid))
-  }, [])
 
   const formSubmissionHandler = (e) => {
     e.preventDefault()
 
-    const date = new Date()
-    const createdAt = date.getTime()
+    const createdAt = String(Date.now())
     const msgId = String(v4())
-    const owner = userId
+    const owner = user.uid
+    const email = user.email
 
     sendMessage({ text, createdAt, msgId, owner, email })
     console.log(

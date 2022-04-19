@@ -32,6 +32,7 @@ export function DatabaseProvider({ children }) {
     )
       .then((userCredentials) => {
         setIsLogged(true)
+        setUser({ email: auth.email, id: auth.uid })
         console.log('DatabaseContext.js - signup - auth -> ', auth)
       })
       .catch((error) => {
@@ -58,6 +59,7 @@ export function DatabaseProvider({ children }) {
         console.log('Signed out')
         console.log(auth)
         setIsLogged(false)
+        setMessages([])
       })
       .catch((error) => {
         console.log('Error: ', { code: error.code, message: error.message })
@@ -81,11 +83,10 @@ export function DatabaseProvider({ children }) {
   }, [])
 
   // get all messages
-  const getMessages = async (id) => {
+  const getMessages = async () => {
     const q = query(
       collection(db, 'messages'),
-      where('id', '==', user.id),
-      orderBy('time')
+      where('owner', '==', String(user.uid))
     )
     const querySnapshot = await getDocs(q)
     let retrievedMsgs = []
@@ -105,7 +106,7 @@ export function DatabaseProvider({ children }) {
       ])
     } else {
       console.log(messages)
-      retrievedMsgs.sort((a, b) => b.time - a.time)
+      retrievedMsgs.sort((a, b) => b.createdAt - a.createdAt)
       // console.log('sorted: ', retrievedMsgs)
       setMessages(retrievedMsgs)
     }

@@ -11,7 +11,7 @@ function Container() {
   useEffect(() => {
     getMessages()
     console.log(auth)
-  }, [])
+  }, [isLogged])
 
   return (
     <main className={styles.main}>

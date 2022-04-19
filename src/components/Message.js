@@ -6,7 +6,7 @@ function Message({ message }) {
   return (
     <div className={styles.msg}>
       <div className={styles.msgTop}>
-        <div className={styles.msgName}>{message.name}</div>
+        <div className={styles.msgName}>{message.email}</div>
         <div>
           <FaClipboard className={styles.msgUpdate} />
           <FaTrashAlt className={styles.msgDelete} />
