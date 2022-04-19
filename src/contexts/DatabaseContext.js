@@ -1,6 +1,13 @@
 import { createContext, useState, useEffect } from 'react'
 import { db, auth } from '../api/firebase'
-import { collection, addDoc, getDocs, orderBy } from 'firebase/firestore'
+import {
+  collection,
+  addDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -74,11 +81,13 @@ export function DatabaseProvider({ children }) {
   }, [])
 
   // get all messages
-  const getMessages = async () => {
-    const querySnapshot = await getDocs(
+  const getMessages = async (id) => {
+    const q = query(
       collection(db, 'messages'),
-      orderBy('time', 'desc')
+      where('id', '==', user.id),
+      orderBy('time')
     )
+    const querySnapshot = await getDocs(q)
     let retrievedMsgs = []
     querySnapshot.forEach((doc) => {
       let newMsg = { ...doc.data() }

@@ -1,34 +1,39 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { v4 } from 'uuid'
 import styles from './Form.module.scss'
 import DatabaseContext from '../contexts/DatabaseContext'
+import { auth } from '../api/firebase'
 
 function Form() {
-  const { sendMessage } = useContext(DatabaseContext)
+  const { sendMessage, user } = useContext(DatabaseContext)
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
   const [text, setText] = useState('')
+  const [email, setEmail] = useState('')
+  const [userId, setUserId] = useState('')
+
+  useEffect(() => {
+    setEmail(auth.email)
+    setUserId(String(auth.uid))
+  }, [])
 
   const formSubmissionHandler = (e) => {
     e.preventDefault()
 
     const date = new Date()
-    const time = date.getTime()
-    const id = String(v4())
-    sendMessage({ name, email, text, time, id })
+    const createdAt = date.getTime()
+    const msgId = String(v4())
+    const owner = userId
 
-    setName('')
-    setEmail('')
+    sendMessage({ text, createdAt, msgId, owner, email })
+    console.log(
+      'Form.js - formSumbissionHandler - sendMessage(data) -> ',
+      text,
+      createdAt,
+      msgId,
+      owner,
+      email
+    )
     setText('')
-  }
-
-  const nameHandler = (e) => {
-    setName(e.target.value)
-  }
-
-  const emailHandler = (e) => {
-    setEmail(e.target.value)
   }
 
   const textHandler = (e) => {
@@ -37,28 +42,6 @@ function Form() {
 
   return (
     <form className={styles.form}>
-      {/* <label className={styles.formLabel} htmlFor="name">
-        Name
-      </label>
-      <input
-        onChange={nameHandler}
-        className={styles.formInput}
-        value={name}
-        type="text"
-        id="name"
-      />
-
-      <label className={styles.formLabel} htmlFor="email">
-        Email
-      </label>
-      <input
-        onChange={emailHandler}
-        className={styles.formInput}
-        value={email}
-        type="text"
-        id="email"
-      /> */}
-
       <label className={styles.formLabel} htmlFor="text">
         Text
       </label>
