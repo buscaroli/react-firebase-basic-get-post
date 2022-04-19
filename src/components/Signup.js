@@ -3,7 +3,7 @@ import { useState, useContext } from 'react'
 import styles from './Signup.module.scss'
 import DatabaseContext from '../contexts/DatabaseContext'
 
-function Signup() {
+function Signup({ signedup }) {
   const { signup, login, logout } = useContext(DatabaseContext)
 
   const [name, setName] = useState('')
@@ -37,10 +37,13 @@ function Signup() {
     setName('')
     setEmail('')
     setPassword('')
+
+    signedup(e)
   }
 
   return (
     <div className={styles.signup}>
+      <h3 className={styles.signupHeader}>Signup</h3>
       <form className={styles.signupForm}>
         <label className={styles.formLabel} htmlFor="name">
           Name
@@ -71,7 +74,7 @@ function Signup() {
           onChange={passwordHandler}
           className={styles.formPassword}
           value={password}
-          type="text"
+          type="password"
           id="password"
         />
         <button

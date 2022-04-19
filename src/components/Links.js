@@ -14,13 +14,14 @@ const linkArray = [
 function Links() {
   const { login, logout, signup, isLogged } = useContext(DatabaseContext)
 
-  const loginHandler = (e) => {
-    e.preventDefault()
-  }
+  // const loginHandler = (e) => {
+  //   e.preventDefault()
+  // }
 
-  const signupHandler = (e) => {
-    e.preventDefault()
-  }
+  // const signupHandler = (e) => {
+  //   e.preventDefault()
+
+  // }
 
   const logoutHandler = (e) => {
     e.preventDefault()
@@ -33,22 +34,22 @@ function Links() {
     <div>
       {linkArray.map((link, index) => {
         return (
-          <Link className={style.headerLinks} key={index} to={link.path}>
+          <p className={style.headerLinks} key={index}>
             {link.text}
-          </Link>
+          </p>
         )
       })}
-      {!isLogged && (
+      {/* {!isLogged && (
         <button onClick={loginHandler} className={style.btn}>
           Login
         </button>
-      )}
+      )} */}
 
-      {!isLogged && (
+      {/* {!isLogged && (
         <button onClick={signupHandler} className={style.btn}>
           SignUp
         </button>
-      )}
+      )} */}
 
       {isLogged && (
         <button onClick={logoutHandler} className={style.btn}>

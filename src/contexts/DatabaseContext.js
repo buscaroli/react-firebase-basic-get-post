@@ -58,6 +58,7 @@ export function DatabaseProvider({ children }) {
   }
 
   useEffect(() => {
+    // TO DO need to find a way of trying if this works
     const authState = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       console.log('DatabaseContext.js - useEffect - user -> ', currentUser)
@@ -120,6 +121,7 @@ export function DatabaseProvider({ children }) {
         signup,
         login,
         logout,
+        user,
         isLogged,
       }}
     >

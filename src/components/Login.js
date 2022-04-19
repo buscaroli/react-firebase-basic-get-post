@@ -3,7 +3,9 @@ import { useState, useContext } from 'react'
 import styles from './Login.module.scss'
 import DatabaseContext from '../contexts/DatabaseContext'
 
-function Login() {
+import Signup from './Signup'
+
+function Login({ signup }) {
   const { login } = useContext(DatabaseContext)
 
   const [email, setEmail] = useState('')
@@ -31,8 +33,15 @@ function Login() {
     setPassword('')
   }
 
+  const signupLinkHandler = (e) => {
+    e.preventDefault()
+
+    signup(e)
+  }
+
   return (
     <div className={styles.login}>
+      <h3 className={styles.loginHeader}>Login</h3>
       <form className={styles.loginForm}>
         <label className={styles.formLabel} htmlFor="email">
           Email
@@ -52,9 +61,13 @@ function Login() {
           onChange={passwordHandler}
           className={styles.formPassword}
           value={password}
-          type="text"
+          type="password"
           id="password"
         />
+
+        <button onClick={signupLinkHandler} className={styles.signupLink}>
+          SignUp instead
+        </button>
 
         <button
           onClick={formSubmissionHandler}

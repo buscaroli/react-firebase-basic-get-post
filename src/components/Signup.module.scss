@@ -1,3 +1,21 @@
+.signup {
+  display: flex;
+  flex-direction: column;
+}
+
+.signupHeader {
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: var(--color-light);
+  box-shadow: 0px 0px 8px gray;
+  width: 400px;
+  padding: 1rem;
+
+  @media screen and (max-width: 640px) {
+    width: 300px;
+  }
+}
+
 .signupForm {
   margin: 1rem auto;
   padding: 1rem;

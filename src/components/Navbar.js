@@ -7,13 +7,11 @@ import styles from './Navbar.module.scss'
 
 function Navbar() {
   return (
-    <BrowserRouter>
-      <nav className={styles.navbar}>
-        <Logo />
-        <Links />
-        <HamburgerMenu />
-      </nav>
-    </BrowserRouter>
+    <nav className={styles.navbar}>
+      <Logo />
+      <Links />
+      <HamburgerMenu />
+    </nav>
   )
 }
 

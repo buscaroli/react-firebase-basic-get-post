@@ -37,7 +37,7 @@ function Form() {
 
   return (
     <form className={styles.form}>
-      <label className={styles.formLabel} htmlFor="name">
+      {/* <label className={styles.formLabel} htmlFor="name">
         Name
       </label>
       <input
@@ -57,7 +57,7 @@ function Form() {
         value={email}
         type="text"
         id="email"
-      />
+      /> */}
 
       <label className={styles.formLabel} htmlFor="text">
         Text

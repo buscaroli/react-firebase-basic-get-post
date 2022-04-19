@@ -1,14 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './Container.module.scss'
-import Form from './Form'
 import DataList from './DataList'
 import DatabaseContext from '../contexts/DatabaseContext'
-import Signup from './Signup'
-import Login from './Login'
+import SignupLoginWrapper from './SignupLoginWrapper'
 import { auth } from '../api/firebase'
 
 function Container() {
-  const { messages, getMessages } = useContext(DatabaseContext)
+  const { messages, getMessages, isLogged } = useContext(DatabaseContext)
 
   useEffect(() => {
     getMessages()
@@ -17,12 +15,8 @@ function Container() {
 
   return (
     <main className={styles.main}>
-      <Form />
-      <div>
-        <DataList messages={messages} />
-        <Signup />
-        <Login />
-      </div>
+      <SignupLoginWrapper />
+      {isLogged && <DataList messages={messages} />}
     </main>
   )
 }
