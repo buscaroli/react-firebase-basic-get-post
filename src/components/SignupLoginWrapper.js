@@ -22,7 +22,7 @@ function SignupLoginWrapper({ title }) {
     e.preventDefault()
 
     setSignupShows(false)
-    setLoginShows(true)
+    setLoginShows(false)
   }
 
   useEffect(() => {

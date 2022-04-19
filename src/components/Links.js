@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 import style from './Links.module.scss'
 import { useContext } from 'react'
 import DatabaseContext from '../contexts/DatabaseContext'
@@ -39,17 +39,6 @@ function Links() {
           </p>
         )
       })}
-      {/* {!isLogged && (
-        <button onClick={loginHandler} className={style.btn}>
-          Login
-        </button>
-      )} */}
-
-      {/* {!isLogged && (
-        <button onClick={signupHandler} className={style.btn}>
-          SignUp
-        </button>
-      )} */}
 
       {isLogged && (
         <button onClick={logoutHandler} className={style.btn}>
