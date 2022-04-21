@@ -5,6 +5,7 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
+  updateDoc,
   doc,
   query,
   where,
@@ -138,7 +139,24 @@ export function DatabaseProvider({ children }) {
 
       await getMessages()
     } catch (error) {
-      console.log('Error deleting message: ', { error })
+      console.error('Error deleting message: ', { error })
+    }
+  }
+
+  const updateMessage = async (data) => {
+    try {
+      const q = query(
+        collection(db, 'messages'),
+        where('msgId', '==', String(data.msgId))
+      )
+
+      const docs = await getDocs(q)
+
+      docs.forEach((msg) => {
+        updateDoc(doc(db, 'messages', data.text))
+      })
+    } catch (error) {
+      console.error('Error updating message: ', { error })
     }
   }
 
@@ -149,6 +167,7 @@ export function DatabaseProvider({ children }) {
         getMessages,
         sendMessage,
         deleteMessage,
+        updateMessage,
         signup,
         login,
         logout,

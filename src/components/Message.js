@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Message.module.scss'
-import { FaTrashAlt, FaClipboard } from 'react-icons/fa'
+import { FaTrashAlt } from 'react-icons/fa'
 import DatabaseContext from '../contexts/DatabaseContext'
 import { useContext } from 'react'
 
@@ -10,15 +10,20 @@ function Message({ message }) {
   const onMsgDelete = (e) => {
     e.preventDefault()
     deleteMessage(message)
-    // console.log('Message.js - onMsgDelete - message -> ', message)
   }
+
+  // const onMsgUpdate = (e) => {
+  //   e.preventDefault()
+
+  //   updateMessage(message)
+  // }
 
   return (
     <div className={styles.msg}>
       <div className={styles.msgTop}>
         <div className={styles.msgName}>{message.email}</div>
         <div>
-          <FaClipboard className={styles.msgUpdate} />
+          {/* <FaClipboard onClick={onMsgUpdate} className={styles.msgUpdate} /> */}
           <FaTrashAlt onClick={onMsgDelete} className={styles.msgDelete} />
         </div>
       </div>
