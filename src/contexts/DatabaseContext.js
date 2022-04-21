@@ -4,7 +4,8 @@ import {
   collection,
   addDoc,
   getDocs,
-  orderBy,
+  deleteDoc,
+  doc,
   query,
   where,
 } from 'firebase/firestore'
@@ -67,7 +68,7 @@ export function DatabaseProvider({ children }) {
   }
 
   useEffect(() => {
-    // TO DO need to find a way of trying if this works
+    // TO DO: need to find a way of trying if this is actually working
     const authState = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       console.log('DatabaseContext.js - useEffect - user -> ', currentUser)
@@ -112,13 +113,32 @@ export function DatabaseProvider({ children }) {
     }
   }
 
-  // send data to the server
+  // send message to the server
   const sendMessage = async (data) => {
     try {
       await addDoc(collection(db, 'messages'), data)
       await getMessages()
     } catch (error) {
-      console.error({ error })
+      console.error('Error sending message: ', { error })
+    }
+  }
+
+  const deleteMessage = async ({ msgId }) => {
+    try {
+      const q = query(
+        collection(db, 'messages'),
+        where('msgId', '==', String(msgId))
+      )
+
+      const docs = await getDocs(q)
+
+      docs.forEach((msg) => {
+        deleteDoc(doc(db, 'messages', msg.id))
+      })
+
+      await getMessages()
+    } catch (error) {
+      console.log('Error deleting message: ', { error })
     }
   }
 
@@ -128,6 +148,7 @@ export function DatabaseProvider({ children }) {
         messages,
         getMessages,
         sendMessage,
+        deleteMessage,
         signup,
         login,
         logout,
